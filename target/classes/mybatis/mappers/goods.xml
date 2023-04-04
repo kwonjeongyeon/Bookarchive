@@ -55,10 +55,11 @@
         	and d.filetype='main_image'
         	and goods_status=#{goodsStatus}
             order by g.goods_creDate desc)  t
-	             where   rowNum <16
+	    where   rowNum <16
 	    ]]>
 	</select>
 
+	<!-- 상품 정보와 상품 메인 이미지 파일 정보를 조회 -->
 	<select id="selectGoodsDetail" resultMap="goodsResult"
 		parameterType="String">
 	    <![CDATA[
@@ -69,6 +70,8 @@
 	        order by g.goods_id
     	]]>
 	</select>
+
+	<!-- 상품 상세 이미지 파일 정보를 조회 -->
 	<select id="selectGoodsDetailImage" resultMap="imageResult"
 		parameterType="String">
 	    <![CDATA[
@@ -78,6 +81,9 @@
     	]]>
 	</select>
 
+
+
+	<!-- 검색창에 입력한 단어를 가져와 그 단어가 포함된 상품 제목을 조회합니다 -->
 	<select id="selectGoodsBySearchWord" resultMap="goodsResult"
 		parameterType="String">
      <![CDATA[
@@ -89,6 +95,9 @@
 		]]>
 	</select>
 
+
+
+	<!-- 검색창에 입력한 키워드를 가져와 그 키워드가 포함된 상품 제목을 조회합니다. -->
 	<select id="selectKeywordSearch" resultType="String"
 		parameterType="String">
 	    <![CDATA[

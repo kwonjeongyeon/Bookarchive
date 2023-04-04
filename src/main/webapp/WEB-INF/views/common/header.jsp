@@ -1,143 +1,142 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-
-<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>header</title>
+
+<style type="text/css">
+.header_wrap .head_link {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	z-index: 9999;
+	height: 38px;
+	background-color: #33afe9;
+	border-bottom: 1px solid #4496D9;
+	box-sizing: border-box;
+	border-bottom: 1px solid #4496D9;
+}
+</style>
+
+<script type="text/javascript">
+	var loopSearch = true;
+	function keywordSearch() {
+		if (loopSearch == false)
+			return;
+		var value = document.frmSearch.searchWord.value;
+		$.ajax({
+			type : "get",
+			async : true, //falseÏù∏ Í≤ΩÏö∞ ÎèôÍ∏∞ÏãùÏúºÎ°ú Ï≤òÎ¶¨ÌïúÎã§.
+			url : "${contextPath}/goods/keywordSearch.do",
+			data : {
+				keyword : value
+			},
+			success : function(data, textStatus) {
+				var jsonInfo = JSON.parse(data);
+				displayResult(jsonInfo);
+			},
+			error : function(data, textStatus) {
+				alert("ÏóêÎü¨Í∞Ä Î∞úÏÉùÌñàÏäµÎãàÎã§." + data);
+			},
+			complete : function(data, textStatus) {
+				//alert("ÏûëÏóÖÏùÑÏôÑÎ£å ÌñàÏäµÎãàÎã§");
+
+			}
+		}); //end ajax	
+	}
+
+	function displayResult(jsonInfo) {
+		var count = jsonInfo.keyword.length;
+		if (count > 0) {
+			var html = '';
+			for ( var i in jsonInfo.keyword) {
+				html += "<a href=\"javascript:select('" + jsonInfo.keyword[i]
+						+ "')\">" + jsonInfo.keyword[i] + "</a><br/>";
+			}
+			var listView = document.getElementById("suggestList");
+			listView.innerHTML = html;
+			show('suggest');
+		} else {
+			hide('suggest');
+		}
+	}
+
+	function select(selectedKeyword) {
+		document.frmSearch.searchWord.value = selectedKeyword;
+		loopSearch = false;
+		hide('suggest');
+	}
+
+	function show(elementId) {
+		var element = document.getElementById(elementId);
+		if (element) {
+			element.style.display = 'block';
+		}
+	}
+
+	function hide(elementId) {
+		var element = document.getElementById(elementId);
+		if (element) {
+			element.style.display = 'none';
+		}
+	}
+</script>
 </head>
 <body>
-	<table border="0" width="100%">
-		<tr>
-			<td><a href="${contextPath}/main.do"> <img
-					src="${contextPath}/resources/image/racoon.jpg" />
-			</a></td>
-			<td>
-				<h1>
-					<font size="30">Ω∫«¡∏µΩ«Ω¿ »®∆‰¿Ã¡ˆ</font>
-				</h1>
-			</td>
-		</tr>
-	</table>
+	<div id="logo">
+		<a href="${contextPath}/main/main.do"> <img width="240"
+			height="60" alt="bookarchive"
+			src="${contextPath}/resources/image/bookarchive.PNG">
+		</a>
+	</div>
 
 	<div class="header_wrap ">
 
 
-		<div class="headertop">
-			<div class="inner">
-				<ul class="gnb" id="headerTop_gnb">
-					<li id="#head_book_layer"><a href="#" title="±π≥ªµµº≠">±π≥ªø‹µµº≠</a>
+		<div id="head_link">
+			<ul>
+				<c:choose>
+					<c:when test="${isLogOn==true and not empty memberInfo}">
+						<li><a href="${contextPath}/member/logout.do">Î°úÍ∑∏ÏïÑÏõÉ</a></li>
+						<li><a href="${contextPath}/mypage/myPageMain.do">ÎßàÏù¥ÌéòÏù¥ÏßÄ</a></li>
+						<li><a href="${contextPath}/cart/myCartList.do">Ïû•Î∞îÍµ¨Îãà</a></li>
+						<li><a href="#">Ï£ºÎ¨∏Î∞∞ÏÜ°</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="${contextPath}/member/loginForm.do">Î°úÍ∑∏Ïù∏</a></li>
+						<li><a href="${contextPath}/member/memberForm.do">ÌöåÏõêÍ∞ÄÏûÖ</a></li>
+					</c:otherwise>
+				</c:choose>
+				<li><a href="#">Í≥†Í∞ùÏÑºÌÑ∞</a></li>
+				<c:if test="${isLogOn==true and memberInfo.member_id =='admin'}">
+					<li class="no_line"><a
+						href="${contextPath}/admin/goods/adminGoodsMain.do">Í¥ÄÎ¶¨Ïûê</a></li>
+				</c:if>
 
-						<div id="head_book_layer" class="header_layer_box"
-							style="display: none;">
-							<div class="category">
-								<ul>
-									<li><a href="#">IT/¿Œ≈Õ≥›</a></li>
-									<li><a href="#"><strong>∞Ê¡¶/∞Êøµ</strong></a></li>
-									<li><a href="#">¥Î«–±≥¿Á</a></li>
-									<li><a href="#">¿⁄±‚∞Ëπﬂ</a></li>
-									<li><a href="#">¿⁄ø¨∞˙«–/∞¯«–</a></li>
-									<li><a href="#">ø™ªÁ/¿ŒπÆ«–</a></li>
-
-								</ul>
-							</div>
-
-						</div></li>
-				</ul>
-			</div>
-
-			<li id="#head_music_layer"><a href="#" title="¿Ωπ›">¿Ωπ›</a>
-				<div id="head_music_layer" class="header_layer_box"
-					style="display: none;">
-					<div class="category">
-						<ul>
-							<li><a href="#">∞°ø‰</a></li>
-							<li><a href="#">∑œ</a></li>
-							<li><a href="#">≈¨∑°Ωƒ</a></li>
-							<li><a href="#">¥∫ø°¿Ã¡ˆ</a></li>
-							<li><a href="#">¿Á¡Ó</a></li>
-							<li><a href="#">±‚≈∏</a></li>
-						</ul>
-					</div>
-				</div></li>
+			</ul>
 		</div>
-		<ul class="util" id="headerTop_util">
-			<li><a href="${contextPath}/member/loginForm.do" title="∑Œ±◊¿Œ">∑Œ±◊¿Œ</a></li>
-			<li><a href="#" title="»∏ø¯∞°¿‘">»∏ø¯∞°¿‘</a></li>
-			<li id="#head_myaccount_layer"><a href="#" title="∏∂¿Ã∆‰¿Ã¡ˆ"
-				class="arr">∏∂¿Ã∆‰¿Ã¡ˆ</a>
-				<div id="head_myaccount_layer" style="width: 100px; display: none;"
-					class="hdr">
-					<table border="0" cellspacing="4" cellpadding="3">
-						<tbody>
-							<tr>
-								<td valign="top">
-									<table>
-										<tbody>
-											<tr>
-												<td><a href="#">≥™¿«∞Ë¡§</a></td>
-											</tr>
-											<tr>
-												<td><a href="#">¡÷πÆ/πËº€¡∂»∏</a></td>
-											</tr>
-											<tr>
-												<td><a href="#">∫∏∞¸«‘</a></td>
-											</tr>
-											<tr>
-												<td><a href="#">±∏∏≈«‘</a></td>
-											</tr>
-											<tr>
-												<td><a href="#">≥™¿«º≠¿Á</a></td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div></li>
-			<li><a href="#" title="∞Ì∞¥ºæ≈Õ">∞Ì∞¥ºæ≈Õ</a></li>
-			<li id="headerBasketBtn"><a href="#" title="¿ÂπŸ±∏¥œ">¿ÂπŸ±∏¥œ <span
-					id="basketItemCount">(0)</span></a>
-				<div id="head_layer_accunt_container"
-					style="position: relative; z-index: 9999; margin-top: -5px;">
-					<div id="headerBasketLayerWrap" style="display: none;">
-						<div id="headerBasketLayer" class="nh_basket">
-							<table width="243" border="0" cellspacing="0" cellpadding="0">
-								<tbody>
-									<tr>
-										<td><img src="./∫œƒ´¿Ã∫Í_files/nh_basket01.gif" width="243"
-											height="7" style="visibility: hidden"></td>
-									</tr>
-									<tr>
-										<td>
-											<div id="headerBasketItems">
-												<div style="text-align: center; vertical-align: baseline">
-													<img src="./∫œƒ´¿Ã∫Í_files/loading_on.gif" width="16"
-														height="16">
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td><img src="./∫œƒ´¿Ã∫Í_files/nh_basket01.gif" width="243"
-											height="7" style="visibility: hidden"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div></li>
-		</ul>
+		<br>
+		<div id="search">
+			<form name="frmSearch" action="${contextPath}/goods/searchGoods.do">
+				<input name="searchWord" class="main_input" type="text"
+					onKeyUp="keywordSearch()"> <input type="submit"
+					name="search" class="btn1" value="Í≤Ä ÏÉâ">
+			</form>
+		</div>
+		<div id="suggest">
+			<div id="suggestList"></div>
+		</div>
 	</div>
 </body>
 </html>
