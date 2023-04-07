@@ -1,46 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"
+	 isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+<!DOCTYPE html >
 <html>
 <head>
-<meta charset="UTF-8">
-<title>�α���â</title>
-<c:choose>
-	<c:when test="${result=='loginFailed' }">
-		<script>
-	    window.onload=function(){
-	      alert("���̵� ��й�ȣ�� Ʋ���ϴ�.�ٽ� �α��� �ϼ���!");
-	    }
-	  </script>
-	</c:when>
-</c:choose>
-</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<c:if test='${not empty message }'>
+<script>
+window.onload=function()
+{
+  result();
+}
 
+function result(){
+	alert("아이디나  비밀번호가 틀립니다. 다시 로그인해주세요");
+}
+</script>
+</c:if>
+</head>
 <body>
-	<form name="frmLogin" method="post"
-		action="${contextPath}/member/login.do">
-		<table border="1" width="80%" align="center">
-			<tr align="center">
-				<td>���̵�</td>
-				<td>��й�ȣ</td>
-			</tr>
-			<tr align="center">
-				<td><input type="text" name="id" value="" size="20"></td>
-				<td><input type="password" name="pwd" value="" size="20">
-				</td>
-			</tr>
-			<tr align="center">
-				<td colspan="2"><input type="submit" value="�α���"> <input
-					type="reset" value="�ٽ��Է�"></td>
-			</tr>
-		</table>
-	</form>
+	<H3>회원 로그인 창</H3>
+	<DIV id="detail_table">
+	<form action="${contextPath}/member/login.do" method="post">
+		<TABLE>
+			<TBODY>
+				<TR class="dot_line">
+					<TD class="fixed_join">아이디</TD>
+					<TD><input name="member_id" type="text" size="20" /></TD>
+				</TR>
+				<TR class="solid_line">
+					<TD class="fixed_join">비밀번호</TD>
+					<TD><input name="member_pw" type="password" size="20" /></TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+		<br><br>
+		<INPUT	type="submit" value="로그인"> 
+		<INPUT type="button" value="초기화">
+		
+		<Br><br>
+		   <a href="#">아이디 찾기</a>  | 
+		   <a href="#">비밀번호 찾기</a> | 
+		   <a href="${contextPath}/member/addMember.do">회원가입</a>    | 
+		   <a href="#">고객 센터</a>
+					   
+	</form>		
 </body>
 </html>

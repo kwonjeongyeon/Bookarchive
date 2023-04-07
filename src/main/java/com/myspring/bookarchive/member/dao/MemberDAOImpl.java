@@ -1,6 +1,7 @@
 package com.myspring.bookarchive.member.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +17,20 @@ public class MemberDAOImpl implements MemberDAO {
 	private SqlSession sqlSession;
 
 	@Override
-	public List selectAllMemberList() throws DataAccessException {
-		List<MemberVO> membersList = null;
-		membersList = sqlSession.selectList("mapper.member.selectAllMemberList");
-		return membersList;
+	public void insertNewMember(MemberVO memberVO) throws DataAccessException {
+		sqlSession.insert("mapper.member.insertNewMember", memberVO);
 	}
 
 	@Override
-	public int insertMember(MemberVO memberVO) throws DataAccessException {
-		int result = sqlSession.insert("mapper.member.insertMember", memberVO);
+	public String selectOverlappedID(String id) throws DataAccessException {
+		String result = sqlSession.selectOne("mapper.member.selectOverlappedID", id);
 		return result;
 	}
 
 	@Override
-	public int deleteMember(String id) throws DataAccessException {
-		int result = sqlSession.insert("mapper.member.deleteMember", id);
-		return result;
-	}
-
-	@Override
-	public MemberVO loginById(MemberVO memberVO) throws DataAccessException {
-		MemberVO vo = sqlSession.selectOne("mapper.member.loginById", memberVO);
-		return vo;
+	public MemberVO login(Map loginMap) throws DataAccessException {
+		MemberVO member = (MemberVO) sqlSession.selectOne("mapper.member.login", loginMap);
+		return member;
 	}
 
 }

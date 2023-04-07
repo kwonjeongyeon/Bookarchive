@@ -79,7 +79,7 @@ public class BoardControllerImpl implements BoardController {
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 
 		// 세션에 저장된 회원 정보로부터 회원 ID 가져옴
-		String id = memberVO.getId();
+		String id = memberVO.getMember_id();
 
 		// 회원 id, 이미지 파일 이름, 부모 글 번호를 articleMap에 저장
 		articleMap.put("parentNO", 0);

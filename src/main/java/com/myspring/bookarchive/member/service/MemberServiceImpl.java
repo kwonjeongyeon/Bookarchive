@@ -1,6 +1,7 @@
 package com.myspring.bookarchive.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -18,31 +19,19 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 
-	/*
-	 * 
-	 * setMemberDAO(MemberDAO memberDAO) { this.memberDAO = memberDAO; }
-	 */
-
 	@Override
-	public List<MemberVO> listMembers() throws DataAccessException {
-		List<MemberVO> membersList = null;
-		membersList = memberDAO.selectAllMemberList();
-		return membersList;
+	public void addMember(MemberVO memberVO) throws Exception {
+		memberDAO.insertNewMember(memberVO);
 	}
 
 	@Override
-	public int addMember(MemberVO memberVO) throws DataAccessException {
-		return memberDAO.insertMember(memberVO);
+	public String overlapped(String id) throws Exception {
+		return memberDAO.selectOverlappedID(id);
 	}
 
 	@Override
-	public int deleteMember(String id) throws DataAccessException {
-		return memberDAO.deleteMember(id);
-	}
-	
-	@Override
-	public MemberVO login(MemberVO memberVO) throws Exception{
-		return memberDAO.loginById(memberVO);
+	public MemberVO login(Map loginMap) throws Exception {
+		return memberDAO.login(loginMap);
 	}
 
 }
