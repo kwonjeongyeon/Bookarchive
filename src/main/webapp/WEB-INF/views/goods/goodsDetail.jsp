@@ -8,8 +8,8 @@
 <c:set var="goods" value="${goodsMap.goodsVO}" />
 <c:set var="imageList" value="${goodsMap.imageList }" />
 <%
-      pageContext.setAttribute("crcn", "\r\n"); //텍스트 개행문자를 변수 crcn으로 대체
-      pageContext.setAttribute("br", "<br/>"); //br 태그를 변수 br로 대체
+	pageContext.setAttribute("crcn", "\r\n"); //텍스트 개행문자를 변수 crcn으로 대체
+	pageContext.setAttribute("br", "<br/>"); //br 태그를 변수 br로 대체
 %>
 <html>
 <head>
@@ -30,7 +30,7 @@
 	top: 45%;
 	width: 300px;
 	height: 200px;
-	background-color: #ccffff;
+	background-color: #FFFFF0;
 	border: 3px solid #87cb42;
 }
 
@@ -45,22 +45,23 @@
 			type : "post",
 			async : false, //false인 경우 동기식으로 처리한다.
 			url : "${contextPath}/cart/addGoodsInCart.do",
+			//Ajax 이용해 장바구니에 추가할 상품 번호 전송
 			data : {
-				goods_id:goods_id
-				
+				goods_id : goods_id
+
 			},
 			success : function(data, textStatus) {
 				//alert(data);
-			//	$('#message').append(data);
-				if(data.trim()=='add_success'){
-					imagePopup('open', '.layer01');	
-				}else if(data.trim()=='already_existed'){
-					alert("이미 카트에 등록된 상품입니다.");	
-				}
-				
+				//	$('#message').append(data);
+				if (data.trim() == 'add_success') {
+					imagePopup('open', '.layer01');
+				} else if (data.trim() == 'already_existed') {
+					alert("이미 카트에 등록된 상품입니다.");
+				} //장바구니에 추가하면 알림창 표시
+
 			},
 			error : function(data, textStatus) {
-				alert("에러가 발생했습니다."+data);
+				alert("에러가 발생했습니다." + data);
 			},
 			complete : function(data, textStatus) {
 				//alert("작업을완료 했습니다");
@@ -83,49 +84,49 @@
 			jQuery('#layer').attr('style', 'visibility:hidden');
 		}
 	}
-	
-function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
-	var _isLogOn=document.getElementById("isLogOn");
-	var isLogOn=_isLogOn.value;
-	
-	 if(isLogOn=="false" || isLogOn=='' ){
-		alert("로그인 후 주문이 가능합니다!!!");
-	} 
-	
-	
-		var total_price,final_total_price;
-		var order_goods_qty=document.getElementById("order_goods_qty");
-		
-		var formObj=document.createElement("form");
-		var i_goods_id = document.createElement("input"); 
-    var i_goods_title = document.createElement("input");
-    var i_goods_sales_price=document.createElement("input");
-    var i_fileName=document.createElement("input");
-    var i_order_goods_qty=document.createElement("input");
-    
-    i_goods_id.name="goods_id";
-    i_goods_title.name="goods_title";
-    i_goods_sales_price.name="goods_sales_price";
-    i_fileName.name="goods_fileName";
-    i_order_goods_qty.name="order_goods_qty";
-    
-    i_goods_id.value=goods_id;
-    i_order_goods_qty.value=order_goods_qty.value;
-    i_goods_title.value=goods_title;
-    i_goods_sales_price.value=goods_sales_price;
-    i_fileName.value=fileName;
-    
-    formObj.appendChild(i_goods_id);
-    formObj.appendChild(i_goods_title);
-    formObj.appendChild(i_goods_sales_price);
-    formObj.appendChild(i_fileName);
-    formObj.appendChild(i_order_goods_qty);
 
-    document.body.appendChild(formObj); 
-    formObj.method="post";
-    formObj.action="${contextPath}/order/orderEachGoods.do";
-    formObj.submit();
-	}	
+	function fn_order_each_goods(goods_id, goods_title, goods_sales_price,
+			fileName) {
+		var _isLogOn = document.getElementById("isLogOn");
+		var isLogOn = _isLogOn.value;
+
+		if (isLogOn == "false" || isLogOn == '') {
+			alert("로그인 후 주문이 가능합니다!!!");
+		}
+
+		var total_price, final_total_price;
+		var order_goods_qty = document.getElementById("order_goods_qty");
+
+		var formObj = document.createElement("form");
+		var i_goods_id = document.createElement("input");
+		var i_goods_title = document.createElement("input");
+		var i_goods_sales_price = document.createElement("input");
+		var i_fileName = document.createElement("input");
+		var i_order_goods_qty = document.createElement("input");
+
+		i_goods_id.name = "goods_id";
+		i_goods_title.name = "goods_title";
+		i_goods_sales_price.name = "goods_sales_price";
+		i_fileName.name = "goods_fileName";
+		i_order_goods_qty.name = "order_goods_qty";
+
+		i_goods_id.value = goods_id;
+		i_order_goods_qty.value = order_goods_qty.value;
+		i_goods_title.value = goods_title;
+		i_goods_sales_price.value = goods_sales_price;
+		i_fileName.value = fileName;
+
+		formObj.appendChild(i_goods_id);
+		formObj.appendChild(i_goods_title);
+		formObj.appendChild(i_goods_sales_price);
+		formObj.appendChild(i_fileName);
+		formObj.appendChild(i_order_goods_qty);
+
+		document.body.appendChild(formObj);
+		formObj.method = "post";
+		formObj.action = "${contextPath}/order/orderEachGoods.do";
+		formObj.submit();
+	}
 </script>
 </head>
 <body>
@@ -133,7 +134,7 @@ function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
 		<h1>컴퓨터와 인터넷</h1>
 		<h2>국내외 도서 &gt; 컴퓨터와 인터넷 &gt; 웹 개발</h2>
 		<h3>${goods.goods_title }</h3>
-		<h4>${goods.goods_writer}&nbsp;저| ${goods.goods_publisher}</h4>
+		<h4>${goods.goods_writer}&nbsp;저|${goods.goods_publisher}</h4>
 	</hgroup>
 	<div id="goods_image">
 		<figure>
@@ -214,7 +215,7 @@ function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
 			</a></li>
 			<li><a class="cart"
 				href="javascript:add_cart('${goods.goods_id }')">장바구니</a></li>
-
+			<!-- 장바구니를 클릭하면 추가할 상품 번호를 함수로 전달 -->
 			<li><a class="wish" href="#">위시리스트</a></li>
 		</ul>
 	</div>

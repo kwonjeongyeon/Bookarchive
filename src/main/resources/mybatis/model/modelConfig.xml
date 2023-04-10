@@ -13,5 +13,7 @@
 		<typeAlias
 			type="com.myspring.bookarchive.goods.vo.ImageFileVO"
 			alias="imageFileVO" />
+		<typeAlias type="com.myspring.bookarchive.cart.vo.CartVO"
+			alias="cartVO" />
 	</typeAliases>
 </configuration>

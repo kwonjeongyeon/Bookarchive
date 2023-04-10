@@ -102,9 +102,7 @@
                                     #{zipcode},
                                     #{roadAddress},
                                     #{jibunAddress},
-                                    #{namujiAddress})
-                                  
-                                      
+                                    #{namujiAddress})                               
    ]]>      
   </insert>
 </mapper>
