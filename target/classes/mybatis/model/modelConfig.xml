@@ -4,8 +4,7 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias
-			type="com.myspring.bookarchive.member.vo.MemberVO" alias="memberVO" />
+
 		<typeAlias
 			type="com.myspring.bookarchive.board.vo.ArticleVO" alias="articleVO" />
 		<typeAlias type="com.myspring.bookarchive.goods.vo.GoodsVO"
@@ -13,7 +12,13 @@
 		<typeAlias
 			type="com.myspring.bookarchive.goods.vo.ImageFileVO"
 			alias="imageFileVO" />
+		<typeAlias
+			type="com.myspring.bookarchive.member.vo.MemberVO" alias="memberVO" />
 		<typeAlias type="com.myspring.bookarchive.cart.vo.CartVO"
 			alias="cartVO" />
+		<typeAlias type="com.myspring.bookarchive.order.vo.OrderVO"
+			alias="orderVO" />
+		<typeAlias type="com.myspring.bookarchive.mypage.vo.MyPageVO"
+			alias="mypageVO" />
 	</typeAliases>
 </configuration>

@@ -69,7 +69,7 @@
 				<tiles:insertAttribute name="footer" />
 			</footer>
 		</div>
-		<%-- <tiles:insertAttribute name="quickMenu" /> --%>
+		<tiles:insertAttribute name="quickMenu" />
 	</div>
 </body>
 

@@ -87,29 +87,36 @@
 
 	function fn_order_each_goods(goods_id, goods_title, goods_sales_price,
 			fileName) {
+		//<hidden> 태그의 id로 로그인 상태를 가져온다
 		var _isLogOn = document.getElementById("isLogOn");
 		var isLogOn = _isLogOn.value;
 
+		//로그인 상태를 확인
 		if (isLogOn == "false" || isLogOn == '') {
-			alert("로그인 후 주문이 가능합니다!!!");
+			alert("로그인 후 주문이 가능합니다!");
 		}
 
 		var total_price, final_total_price;
 		var order_goods_qty = document.getElementById("order_goods_qty");
+		//상품 주문 개수를 가져온다
 
+		//<form>태그를 동적으로 생성
 		var formObj = document.createElement("form");
+		//<input>태그를 동적으로 생성
 		var i_goods_id = document.createElement("input");
 		var i_goods_title = document.createElement("input");
 		var i_goods_sales_price = document.createElement("input");
 		var i_fileName = document.createElement("input");
 		var i_order_goods_qty = document.createElement("input");
 
+		//<input>태그에 name/value로 값을 설정
 		i_goods_id.name = "goods_id";
 		i_goods_title.name = "goods_title";
 		i_goods_sales_price.name = "goods_sales_price";
 		i_fileName.name = "goods_fileName";
 		i_order_goods_qty.name = "order_goods_qty";
 
+		//동적으로 생성한 <input>태그에 값을 설정한 후 다시 <form>태그에 추가
 		i_goods_id.value = goods_id;
 		i_order_goods_qty.value = order_goods_qty.value;
 		i_goods_title.value = goods_title;
@@ -124,6 +131,7 @@
 
 		document.body.appendChild(formObj);
 		formObj.method = "post";
+		//컨트롤러로 요청하면서 <input> 태그의 값을 매개변수로 전달
 		formObj.action = "${contextPath}/order/orderEachGoods.do";
 		formObj.submit();
 	}
@@ -200,6 +208,7 @@
 					<td class="fixed">수량</td>
 					<td class="fixed"><select style="width: 60px;"
 						id="order_goods_qty">
+							<!-- 셀렉트 박스로 주문 수량 선택 -->
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
@@ -210,6 +219,7 @@
 			</tbody>
 		</table>
 		<ul>
+			<!-- 구매하기 클릭시 자바스크립트 함수로 상품 번호, 상품명, 판매 가격, 이미지 파일 이름 전달 -->
 			<li><a class="buy"
 				href="javascript:fn_order_each_goods('${goods.goods_id }','${goods.goods_title }','${goods.goods_sales_price}','${goods.goods_fileName}');">구매하기
 			</a></li>
@@ -281,4 +291,5 @@
 			</form>
 </body>
 </html>
+<!-- 로그인 상태를 <hidden> 태그에 저장 -->
 <input type="hidden" name="isLogOn" id="isLogOn" value="${isLogOn}" />
