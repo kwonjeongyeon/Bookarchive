@@ -27,8 +27,9 @@ import com.myspring.bookarchive.member.vo.MemberVO;
 @Controller("cartController")
 @RequestMapping(value = "/cart")
 public class CartControllerImpl extends BaseController implements CartController {
-	//조회한 장바구니 목록과 상품 정보 목록을 Map에 저장, 장바구니 목록을 표시하는 페이지에서 상품을 주문할 경우에 대비해 상품 정보를 미리 세션에 바인딩
-	
+	// 조회한 장바구니 목록과 상품 정보 목록을 Map에 저장, 장바구니 목록을 표시하는 페이지에서 상품을 주문할 경우에 대비해 상품 정보를 미리
+	// 세션에 바인딩
+
 	@Autowired
 	private CartService cartService;
 	@Autowired
@@ -44,10 +45,10 @@ public class CartControllerImpl extends BaseController implements CartController
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberInfo");
 		String member_id = memberVO.getMember_id();
 		cartVO.setMember_id(member_id);
-		
-		//장바구니 페이지에 표시할 상품 정보를 조회
+
+		// 장바구니 페이지에 표시할 상품 정보를 조회
 		Map<String, List> cartMap = cartService.myCartList(cartVO);
-		
+
 		session.setAttribute("cartMap", cartMap);// 장바구니 목록 화면에서 상품 주문 시 사용하기 위해서 장바구니 목록을 세션에 저장한다.
 		// mav.addObject("cartMap", cartMap);
 		return mav;
@@ -55,8 +56,9 @@ public class CartControllerImpl extends BaseController implements CartController
 
 	@RequestMapping(value = "/addGoodsInCart.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public @ResponseBody String addGoodsInCart(@RequestParam("goods_id") int goods_id, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {  //전송된 상품 번호를 받음
-		//브라우저에서 전송된 상품 번호를 이용해 상품이 장바구니 테이블에 이미 추가된 상품인지 확인, 장바구니에 없으면 상품 번호를 장바구니 테이블에 추가
+			HttpServletResponse response) throws Exception { // 전송된 상품 번호를 받음
+		// 브라우저에서 전송된 상품 번호를 이용해 상품이 장바구니 테이블에 이미 추가된 상품인지 확인, 장바구니에 없으면 상품 번호를 장바구니
+		// 테이블에 추가
 		HttpSession session = request.getSession();
 		memberVO = (MemberVO) session.getAttribute("memberInfo");
 		String member_id = memberVO.getMember_id();
@@ -64,12 +66,12 @@ public class CartControllerImpl extends BaseController implements CartController
 		cartVO.setMember_id(member_id);
 		// 카트 등록전에 이미 등록된 제품인지 판별한다.
 		cartVO.setGoods_id(goods_id);
-		
-		//상품 번호가 장바구니 테이블에 있는지 조회
+
+		// 상품 번호가 장바구니 테이블에 있는지 조회
 		boolean isAreadyExisted = cartService.findCartGoods(cartVO);
 		System.out.println("isAreadyExisted: " + isAreadyExisted);
-		
-		//상품 번호가 이미 장바구니 테이블에 있으면 이미 추가되었다는 메시지를 브라우저로 전송, 없으면 장바구니 테이블에 추가
+
+		// 상품 번호가 이미 장바구니 테이블에 있으면 이미 추가되었다는 메시지를 브라우저로 전송, 없으면 장바구니 테이블에 추가
 		if (isAreadyExisted == true) {
 			return "already_existed";
 		} else {

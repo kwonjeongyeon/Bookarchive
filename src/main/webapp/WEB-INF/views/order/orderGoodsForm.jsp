@@ -512,7 +512,7 @@
 	<form name="form_order">
 		<table class="list_view">
 			<tbody align=center>
-				<tr style="background: #33ff00">
+				<tr style="background: #BBDEFB">
 					<td colspan=2 class="fixed">주문상품명</td>
 					<td>수량</td>
 					<td>주문금액</td>
