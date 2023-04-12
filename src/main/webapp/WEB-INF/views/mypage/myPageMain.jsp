@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<!-- 주문 취소 후 다시 페이지를 요청할 경우 주문 취소 메시지를 출력 -->
+<%--주문 취소 후 다시 페이지를 요청할 경우 주문 취소 메시지를 출력--%>
 <c:if test="${message=='cancel_order'}">
 	<script>
 		window.onload = function() {
@@ -78,7 +78,7 @@
 										href="${contextPath}/mypage/myOrderDetail.do?order_id=${item.order_id }"><span>${item.order_id }</span>
 									</a></td>
 									<td><span>${item.pay_order_time }</span></td>
-									<td align="left"><strong> <!-- <forEach>태그를 이용해 주문당 해당 상품명을 한꺼번에 표시 -->
+									<td align="left"><strong> <%--<forEach>태그를 이용해 주문당 해당 상품명을 한꺼번에 표시 --%>
 											<c:forEach var="item2" items="${myOrderList}" varStatus="j">
 												<c:if test="${item.order_id ==item2.order_id}">
 													<a
@@ -88,7 +88,7 @@
 											</c:forEach>
 									</strong></td>
 									<td><c:choose>
-											<!-- 주문 상품의 배송 상태 표시 -->
+											<%--주문 상품의 배송 상태 표시 --%>
 											<c:when test="${item.delivery_state=='delivery_prepared' }">배송준비중</c:when>
 											<c:when test="${item.delivery_state=='delivering' }"> 배송중</c:when>
 											<c:when test="${item.delivery_state=='finished_delivering' }">배송완료</c:when>
@@ -96,7 +96,7 @@
 											<c:when test="${item.delivery_state=='returning_goods' }">반품완료</c:when>
 										</c:choose></td>
 									<td><c:choose>
-											<!-- '배송준비중'일 때만 주문 취소가 가능 -->
+											<%--'배송준비중'일 때만 주문 취소가 가능 --%>
 											<c:when test="${item.delivery_state=='delivery_prepared'}">
 												<input type="button"
 													onClick="fn_cancel_order('${item.order_id}')" value="주문취소" />
@@ -116,7 +116,6 @@
 			</c:choose>
 		</tbody>
 	</table>
-
 	<br>
 	<br>
 	<br>
