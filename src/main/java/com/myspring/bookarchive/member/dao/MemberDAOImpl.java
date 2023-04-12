@@ -12,9 +12,14 @@ import com.myspring.bookarchive.member.vo.MemberVO;
 
 @Repository("memberDAO")
 public class MemberDAOImpl implements MemberDAO {
-
 	@Autowired
 	private SqlSession sqlSession;
+
+	@Override
+	public MemberVO login(Map loginMap) throws DataAccessException {
+		MemberVO member = (MemberVO) sqlSession.selectOne("mapper.member.login", loginMap);
+		return member;
+	}
 
 	@Override
 	public void insertNewMember(MemberVO memberVO) throws DataAccessException {
@@ -25,12 +30,6 @@ public class MemberDAOImpl implements MemberDAO {
 	public String selectOverlappedID(String id) throws DataAccessException {
 		String result = sqlSession.selectOne("mapper.member.selectOverlappedID", id);
 		return result;
-	}
-
-	@Override
-	public MemberVO login(Map loginMap) throws DataAccessException {
-		MemberVO member = (MemberVO) sqlSession.selectOne("mapper.member.login", loginMap);
-		return member;
 	}
 
 }

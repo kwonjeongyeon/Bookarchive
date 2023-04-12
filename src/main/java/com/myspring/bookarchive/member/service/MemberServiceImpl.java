@@ -12,12 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.myspring.bookarchive.member.dao.MemberDAO;
 import com.myspring.bookarchive.member.vo.MemberVO;
 
-@Service(value = "memberService")
+@Service("memberService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class MemberServiceImpl implements MemberService {
-
 	@Autowired
 	private MemberDAO memberDAO;
+
+	@Override
+	public MemberVO login(Map loginMap) throws Exception {
+		return memberDAO.login(loginMap);
+	}
 
 	@Override
 	public void addMember(MemberVO memberVO) throws Exception {
@@ -27,11 +31,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String overlapped(String id) throws Exception {
 		return memberDAO.selectOverlappedID(id);
-	}
-
-	@Override
-	public MemberVO login(Map loginMap) throws Exception {
-		return memberDAO.login(loginMap);
 	}
 
 }

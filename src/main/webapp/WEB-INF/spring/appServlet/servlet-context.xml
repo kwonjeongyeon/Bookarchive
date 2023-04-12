@@ -18,21 +18,8 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
-	<!-- <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<beans:property name="prefix" value="/WEB-INF/views/" /> <beans:property 
-		name="suffix" value=".jsp" /> </beans:bean> -->
-
-	<!-- 멀티파트 뷰리졸버 설정 -->
-	<beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="52428800"></beans:property>
-		<beans:property name="maxInMemorySize" value="1000000"></beans:property>
-		<beans:property name="defaultEncoding" value="utf-8"></beans:property>
-	</beans:bean>
-
 	<beans:bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<beans:property name="definitions">
@@ -40,6 +27,8 @@
 				<beans:value>classpath:tiles/*.xml</beans:value>
 			</beans:list>
 		</beans:property>
+		<beans:property name="preparerFactoryClass"
+			value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory" />
 	</beans:bean>
 
 	<!-- Simple implementation of the ViewResolver interface, allowing for direct 
@@ -47,10 +36,8 @@
 	<beans:bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass"
-			value="org.springframework.web.servlet.view.tiles2.TilesView"></beans:property>
+			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</beans:bean>
-
-
 	<context:component-scan
 		base-package="com.myspring.bookarchive" />
 
@@ -62,11 +49,17 @@
 			<mvc:mapping path="/*/*.do" />
 			<mvc:mapping path="/*/*/*.do" />
 			<beans:bean
-				class="com.myspring.bookarchive.common.interceptor.ViewNameInterceptor"></beans:bean>
+				class="com.myspring.bookarchive.common.interceptor.ViewNameInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-
+	<!-- 멀티파트 리졸버 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800" />
+		<beans:property name="maxInMemorySize" value="52428800" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
 
 
 </beans:beans>

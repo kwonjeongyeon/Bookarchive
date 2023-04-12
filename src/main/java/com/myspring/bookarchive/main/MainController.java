@@ -34,9 +34,9 @@ public class MainController extends BaseController {
 
 		session = request.getSession();
 		session.setAttribute("side_menu", "user");
-		// 속성(side_menu)의 값에 따라 화면 왼쪽에 표시되는 메뉴 항목을 다르게 한다.
+		// 속성 side_menu의 값에 따라 화면 왼쪽에 표시되는 메뉴 항목을 다르게 한다.
 		Map<String, List<GoodsVO>> goodsMap = goodsService.listGoods();
-		// 베스트셀러, 신간, 스테디셀러 정보를 조회해 Map에 저장
+		// 베스트셀러, 신간, 스테디셀러의 정보를 조회해 Map에 저장
 		mav.addObject("goodsMap", goodsMap);
 		// 메인 페이지로 상품 정보를 전달
 		return mav;

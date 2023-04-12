@@ -4,9 +4,6 @@
 
 <configuration>
 	<typeAliases>
-
-		<typeAlias
-			type="com.myspring.bookarchive.board.vo.ArticleVO" alias="articleVO" />
 		<typeAlias type="com.myspring.bookarchive.goods.vo.GoodsVO"
 			alias="goodsVO" />
 		<typeAlias
@@ -18,7 +15,7 @@
 			alias="cartVO" />
 		<typeAlias type="com.myspring.bookarchive.order.vo.OrderVO"
 			alias="orderVO" />
-		<typeAlias type="com.myspring.bookarchive.mypage.vo.MyPageVO"
-			alias="mypageVO" />
+		<typeAlias
+			type="com.myspring.bookarchive.mypage.vo.MyPageVO" alias="mypageVO" />
 	</typeAliases>
 </configuration>

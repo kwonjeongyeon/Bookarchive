@@ -8,11 +8,7 @@ import org.springframework.dao.DataAccessException;
 import com.myspring.bookarchive.member.vo.MemberVO;
 
 public interface MemberDAO {
-
-	public void insertNewMember(MemberVO memberVO) throws DataAccessException;
-
-	public String selectOverlappedID(String id) throws DataAccessException;
-
 	public MemberVO login(Map loginMap) throws DataAccessException;
-
+	public void insertNewMember(MemberVO memberVO) throws DataAccessException;
+	public String selectOverlappedID(String id) throws DataAccessException;
 }
